@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - 
   - FirstPersonWeapon
   - PhysicalAmmo
-  - 
-  - 
+  - Enemy
+  - Weapon
   - 
   - 
   - 
