@@ -21,8 +21,8 @@ TagManager:
   - PhysicalAmmo
   - Enemy
   - Weapon
-  - 
-  - 
+  - Player
+  - Ground
   - 
   - 
   - 
