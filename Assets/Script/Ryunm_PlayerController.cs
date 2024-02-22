@@ -40,16 +40,15 @@ public class Ryunm_PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //Check Jump
-        if (Input.GetButtonDown("Jump")) {
-            shouldJump = true;
-        }
+        JumpCheck();
+        
     }
 
     private void FixedUpdate() {
         PlayerRotateControl();
         PlayerMovement();
         ApplyJump();
+        
     }
 
     private void PlayerRotateControl() {
@@ -103,6 +102,12 @@ public class Ryunm_PlayerController : MonoBehaviour {
         }
     }
 
+    private void JumpCheck() {
+        //Check Jump
+        if (Input.GetButtonDown("Jump")) {
+            shouldJump = true;
+        }
+    }
     private void ApplyJump() {
         // Make sure Jump smoothly
         if (shouldJump && isGround) {
@@ -110,4 +115,5 @@ public class Ryunm_PlayerController : MonoBehaviour {
             shouldJump = false; // reset
         }
     }
+
 }
