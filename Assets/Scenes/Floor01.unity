@@ -11194,12 +11194,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 648497900}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &649354431 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7452141688836731193, guid: df5c63190ab258a48a5674997ae61b38,
-    type: 3}
-  m_PrefabInstance: {fileID: 1146128191469843107}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &652704130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13521,6 +13515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 773312274}
   - component: {fileID: 780214514}
+  - component: {fileID: 780214515}
   m_Layer: 12
   m_Name: HoverBot
   m_TagString: Untagged
@@ -14272,6 +14267,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &780214515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772821810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 887944ecd9c681e409bf2c254c71f7b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0
+  Alerted: 0
+  Death: 0
+  _hovertAni: {fileID: 0}
 --- !u!1001 &780394288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20008,19 +20019,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1146128191469843107}
   m_PrefabAsset: {fileID: 0}
---- !u!143 &1059238589 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 4952623045541115318, guid: df5c63190ab258a48a5674997ae61b38,
-    type: 3}
-  m_PrefabInstance: {fileID: 1146128191469843107}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1059238590 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6268998031119749096, guid: df5c63190ab258a48a5674997ae61b38,
-    type: 3}
-  m_PrefabInstance: {fileID: 1146128191469843107}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1059238591
+--- !u!114 &1059238592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20029,22 +20028,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1059238588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a8e7cf83279fa4a9aff6ad4de8134d, type: 3}
+  m_Script: {fileID: 11500000, guid: 887944ecd9c681e409bf2c254c71f7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 180
-  rotateRate: 1.5
-  Player_Transform: {fileID: 1059238590}
-  EyeView_Transform: {fileID: 1085523318}
-  playerCC: {fileID: 1059238589}
-  moveSpeed: 0.25
-  ver_Velocity: 0
-  isGround: 0
-  GroundCheckPoint: {fileID: 649354431}
-  CheckRadius: 0.8
-  GroundLayer:
-    serializedVersion: 2
-    m_Bits: 32768
+  moveSpeed: 0
+  Alerted: 0
+  Death: 0
+  _hovertAni: {fileID: 0}
 --- !u!1001 &1067625065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20311,12 +20301,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7938487380755381510, guid: f0b642223a6a4d549bb9882da04969c7,
     type: 3}
   m_PrefabInstance: {fileID: 1075061439}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1085523318 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3417605781504740724, guid: df5c63190ab258a48a5674997ae61b38,
-    type: 3}
-  m_PrefabInstance: {fileID: 1146128191469843107}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1090200646
 PrefabInstance:
@@ -38142,16 +38126,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4846139632336016800, guid: df5c63190ab258a48a5674997ae61b38,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.007
-      objectReference: {fileID: 0}
-    - target: {fileID: 4846139632336016800, guid: df5c63190ab258a48a5674997ae61b38,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.077
-      objectReference: {fileID: 0}
     - target: {fileID: 6268998031119749096, guid: df5c63190ab258a48a5674997ae61b38,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -38202,24 +38176,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6428034233964623522, guid: df5c63190ab258a48a5674997ae61b38,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 40247
-      objectReference: {fileID: 0}
-    - target: {fileID: 7452141688836731193, guid: df5c63190ab258a48a5674997ae61b38,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.065
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3224812995490418415, guid: df5c63190ab258a48a5674997ae61b38,
         type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1059238591}
+      insertIndex: 2
+      addedObject: {fileID: 1059238592}
   m_SourcePrefab: {fileID: 100100000, guid: df5c63190ab258a48a5674997ae61b38, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -16,7 +16,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float Gravity = -9.8f;
     [SerializeField] float ver_Velocity = 0;
-    [SerializeField] float MAX_HEIGHT = 1f;
+    [SerializeField] float MAX_HEIGHT = 0.1f;
     
 
     // Check
@@ -26,11 +26,15 @@ public class Ryunm_PlayerController : MonoBehaviour {
     [SerializeField] float CheckRadius = 0.7f;
     [SerializeField] LayerMask GroundLayer;
 
+    // Animator
+    public Ryunm_HoverBotAnimatorController animatorController;
+
 
     // Start is called before the first frame update
     void Start()
     {
         playerCC = GetComponent<CharacterController>();
+        animatorController = GetComponent<Ryunm_HoverBotAnimatorController>();
     }
 
     // Update is called once per frame
@@ -89,10 +93,14 @@ public class Ryunm_PlayerController : MonoBehaviour {
             else 
                 isGround = false;
         }
-       
-
 
         playerCC.Move(motionValue);
+
+        // Evalute the Animator
+        if (animatorController) {
+            animatorController.moveSpeed = moveSpeed * Input_ver;
+            animatorController.Alerted = Input_ver == 0 ? false : true;
+        }
     }
 
     private void ApplyJump() {
