@@ -42,7 +42,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
         ViewChange();
 
         // RayCast
-        Ray _ray = new Ray(bullStartPoint.position, bullStartPoint.forward);
+        Ray _ray = new(bullStartPoint.position, bullStartPoint.forward);
         Debug.DrawRay(_ray.origin, _ray.direction * 1000, Color.red);
     }
     private void OpenFire() {
