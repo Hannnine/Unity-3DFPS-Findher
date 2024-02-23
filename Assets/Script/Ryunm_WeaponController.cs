@@ -24,20 +24,18 @@ public class Ryunm_WeaponController : MonoBehaviour {
     [SerializeField] Vector3 weaponCamDefaultPoint;
     [SerializeField] Vector3 weaponCamCenterPoint;
     [SerializeField] float defaultView = 60;
-    [SerializeField] float centerView = 65;
+    [SerializeField] float centerView = 70;
     [SerializeField] float viewRatio = 0.2f;
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         weaponCam = GameObject.FindGameObjectWithTag("WeaponCam").GetComponent<Camera>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         OpenFire();
         ViewChange();
 
@@ -74,15 +72,15 @@ public class Ryunm_WeaponController : MonoBehaviour {
 
     IEnumerator WeaponBack() {
         yield return null;
-        
-        if(defautPoint!=null && backPoint != null) {
+
+        if (defautPoint != null && backPoint != null) {
             // Back
             while (transform.localPosition != backPoint.localPosition) {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, backPoint.localPosition, lerpRation);
                 yield return null;
             }
             // Forward
-            while(transform.localPosition != defautPoint.localPosition) {
+            while (transform.localPosition != defautPoint.localPosition) {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, defautPoint.localPosition, lerpRation);
                 yield return null;
             }
@@ -96,25 +94,26 @@ public class Ryunm_WeaponController : MonoBehaviour {
     }
 
     private void ViewChange() {
-        if(Input.GetMouseButtonDown(1)) {
+        if (Input.GetMouseButton(1)) {
             StopCoroutine("ViewToDefault");
             StartCoroutine("ViewToCenter");
         }
-        if(Input.GetMouseButtonUp(1)) {
+        else {
             StopCoroutine("ViewToCenter");
             StartCoroutine("ViewToDefault");
         }
     }
 
     IEnumerator ViewToCenter() {
-        while(weaponCam.transform.localPosition != weaponCamCenterPoint) {
+        while (weaponCam.transform.localPosition != weaponCamCenterPoint) {
             weaponCam.transform.localPosition = Vector3.Lerp(weaponCam.transform.localPosition, weaponCamCenterPoint, viewRatio);
             weaponCam.fieldOfView = Mathf.Lerp(weaponCam.fieldOfView, centerView, viewRatio);
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, centerView, viewRatio);
             yield return null;
         }
-    }IEnumerator ViewToDefault() {
-        while(weaponCam.transform.localPosition != weaponCamDefaultPoint) {
+    }
+    IEnumerator ViewToDefault() {
+        while (weaponCam.transform.localPosition != weaponCamDefaultPoint) {
             weaponCam.transform.localPosition = Vector3.Lerp(weaponCam.transform.localPosition, weaponCamDefaultPoint, viewRatio);
             weaponCam.fieldOfView = Mathf.Lerp(weaponCam.fieldOfView, defaultView, viewRatio);
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, defaultView, viewRatio);
