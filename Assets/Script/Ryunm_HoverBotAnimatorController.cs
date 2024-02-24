@@ -7,7 +7,7 @@ public class Ryunm_HoverBotAnimatorController : MonoBehaviour {
     [SerializeField] public bool Alerted;      // On a certain range of Player
     [SerializeField] public bool Death;
 
-    [SerializeField] Animator _hovertAni;
+    public Animator _hovertAni;
 
     // Start is called before the first frame update
     void Start() {
@@ -29,10 +29,12 @@ public class Ryunm_HoverBotAnimatorController : MonoBehaviour {
     public void TriggerAttack() {
         if(_hovertAni == null) return;
         _hovertAni.SetTrigger("Attack");
+        print("hehe");
     }
 
     public void TriggerOnDamage() {
         if(_hovertAni == null) return;
         _hovertAni.SetTrigger("OnDamaged");
+        print("hehe");
     }
 }

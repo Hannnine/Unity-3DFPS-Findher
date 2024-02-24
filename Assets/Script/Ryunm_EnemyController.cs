@@ -27,12 +27,15 @@ public class Ryunm_EnemyController : MonoBehaviour {
     [SerializeField] bool isFire;
     [SerializeField] bool isAlert;
 
+    // Animator
+    public Ryunm_HoverBotAnimatorController enemyAni;   //This is a script
 
     // Start is called before the first frame update
     void Start()
     {
         // Get Player
         _playerController = GameObject.FindObjectOfType<Ryunm_PlayerController>();
+        enemyAni = GetComponent<Ryunm_HoverBotAnimatorController>();
 
         // Get gameObject
         enemyAgent = GetComponent<NavMeshAgent>();
@@ -72,14 +75,17 @@ public class Ryunm_EnemyController : MonoBehaviour {
     }
 
     private void EnemyAlert() {
-        if (Vector3.Distance(transform.position, _playerController.enemyCheckPoint.position) < minDistance || isAlert) {
+        isAlert = Vector3.Distance(transform.position, _playerController.enemyCheckPoint.position) < minDistance ? true : false;
+        if (isAlert) {
             // Attack
             enemyAgent.SetDestination(_playerController.enemyCheckPoint.position);
-            isAlert = true;
+            // Speed
+            enemyAni.moveSpeed = enemyAgent.speed;
+            enemyAni.Alerted = isAlert;
         }
         else {
-            isAlert = false;
             // Only patrol if not currently alert
+            enemyAni.Alerted = isAlert;
             EnemyPatrol();
         }
     }
@@ -113,6 +119,9 @@ public class Ryunm_EnemyController : MonoBehaviour {
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletStartSpeed;
             newBullet.GetComponent<Ryunm_BulletController>().bulletType = BulletType.Enemy_Bullet;
             Destroy(newBullet, 5);
+
+            // Fire animator
+            enemyAni.TriggerAttack();
 
             yield return new WaitForSeconds(fireInterval);
         }

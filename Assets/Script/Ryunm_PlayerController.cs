@@ -20,11 +20,8 @@ public class Ryunm_PlayerController : MonoBehaviour {
     
 
     // Check
-    [SerializeField] bool isGround = false;
+    [SerializeField] bool isGround = true;
     private bool shouldJump = false;
-    [SerializeField] Transform GroundCheckPoint;
-    [SerializeField] float CheckRadius = 0.7f;
-    [SerializeField] LayerMask GroundLayer;
 
     // Animator
     public Ryunm_HoverBotAnimatorController animatorController;
@@ -79,20 +76,14 @@ public class Ryunm_PlayerController : MonoBehaviour {
 
         // X, Z
         motionValue += transform.forward * moveSpeed * Input_ver; // Front n Behind
-        motionValue += transform.right * moveSpeed * Input_hor; // Left n Right
+        motionValue += transform.right * moveSpeed * Input_hor;   // Left n Right
 
         /* Y */
         ver_Velocity += Gravity * Time.fixedDeltaTime;
         motionValue += Vector3.up * ver_Velocity;
+
         // CheckGround
-        if(GroundCheckPoint != null) {
-            if(Physics.CheckSphere(GroundCheckPoint.position, CheckRadius, GroundLayer) && ver_Velocity < 0) { 
-                isGround = true;
-                ver_Velocity = 0;
-            }
-            else 
-                isGround = false;
-        }
+        isGround = playerCC.isGrounded;
 
         playerCC.Move(motionValue);
 
@@ -115,6 +106,10 @@ public class Ryunm_PlayerController : MonoBehaviour {
             ver_Velocity = Mathf.Sqrt(2 * -Gravity * MAX_HEIGHT);
             shouldJump = false; // reset
         }
+    }
+
+    public void OnDamage() {
+        animatorController.TriggerOnDamage();
     }
 
 }

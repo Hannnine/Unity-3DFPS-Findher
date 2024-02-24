@@ -8,7 +8,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
     public GameObject bullet;
     [SerializeField] float bulletStartSpeed = 100f;
     bool isFire = false;
-    float fireInterval = 0.1f;
+    [SerializeField] float fireInterval = 0.1f;
 
     // Back
     [SerializeField] Transform defautPoint;

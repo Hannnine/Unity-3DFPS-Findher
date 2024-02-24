@@ -8,8 +8,8 @@ public enum BulletType {
 
 public class Ryunm_BulletController : MonoBehaviour {
     public BulletType bulletType = BulletType.Player_Bullet;
-    public float P2EdamaValue = 10;
-    public float E2PdamaValue = 1;
+    [SerializeField] float P2EdamaValue = 10;
+    [SerializeField] float E2PdamaValue = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -25,25 +25,21 @@ public class Ryunm_BulletController : MonoBehaviour {
 
     // Physical Crush Check
     private void OnCollisionEnter(Collision collision) {
-        Debug.Log("Collision detected with: " + collision.gameObject.name);
-
         switch (bulletType) {
-            //Player shoot
-            case BulletType.Player_Bullet:
-                Debug.Log("Player bullet collided with: " + collision.gameObject.name);
-                if (collision.gameObject.CompareTag("Enemy")) {
-                    collision.gameObject.GetComponent<Ryunm_HealthController>().Damage(P2EdamaValue);
-                }
-                break;
-
             //Enemy shoot
             case BulletType.Enemy_Bullet:
-                Debug.Log("Enemy bullet collided with: " + collision.gameObject.name);
                 if (collision.gameObject.CompareTag("Player")) {
                     collision.gameObject.GetComponent<Ryunm_HealthController>().Damage(E2PdamaValue);
+                    collision.gameObject.GetComponent<Ryunm_PlayerController>().animatorController.TriggerOnDamage();  //Trigger onAttack
+                }
+                break;
+            //Player shoot
+            case BulletType.Player_Bullet:
+                if (collision.gameObject.CompareTag("Enemy")) {
+                    collision.gameObject.GetComponent<Ryunm_HealthController>().Damage(P2EdamaValue);
+                    collision.gameObject.GetComponent<Ryunm_EnemyController>().enemyAni.TriggerOnDamage(); //Trigger onAttack
                 }
                 break;
         }
-        Destroy(gameObject);
     }
 }
