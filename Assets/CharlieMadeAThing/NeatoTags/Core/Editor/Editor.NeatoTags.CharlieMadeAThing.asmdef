@@ -1,0 +1,18 @@
+{
+    "name": "Editor.NeatoTags.CharlieMadeAThing",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e92ff5d72ad73d64e88821eebb6986ef"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
