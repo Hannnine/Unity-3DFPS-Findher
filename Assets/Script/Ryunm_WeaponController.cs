@@ -59,9 +59,10 @@ public class Ryunm_WeaponController : MonoBehaviour {
             if (bullStartPoint != null || bullet != null) {
                 GameObject newBullet = Instantiate(bullet, bullStartPoint.position, bullStartPoint.rotation);
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletStartSpeed;
-                // Back
-                StopCoroutine("WeaponBack");
-                StartCoroutine("WeaponBack");
+                newBullet.GetComponent<Ryunm_BulletController>().bulletType = BulletType.Player_Bullet  ;
+                // Recoil
+                StopCoroutine("WeaponRecoil");
+                StartCoroutine("WeaponRecoil");
                 PlayBulletSource();
 
                 Destroy(newBullet, 5);
@@ -70,7 +71,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
         }
     }
 
-    IEnumerator WeaponBack() {
+    IEnumerator WeaponRecoil() {
         yield return null;
 
         if (defautPoint != null && backPoint != null) {

@@ -28,6 +28,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
 
     // Animator
     public Ryunm_HoverBotAnimatorController animatorController;
+    public Transform enemyCheckPoint;
 
 
     // Start is called before the first frame update
