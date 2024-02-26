@@ -9,6 +9,8 @@ public class Ryunm_HealthController : MonoBehaviour {
 
     [SerializeField] Slider healthSlider;
 
+    [SerializeField] GameObject botExplosion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +37,16 @@ public class Ryunm_HealthController : MonoBehaviour {
         }
         if(health <= 0) { 
             health = 0;
+            BornBotExplosion();
+            Destroy(this.gameObject);
             //Death
+        }
+    }
+
+    private void BornBotExplosion() {
+        if (botExplosion) {
+            GameObject newExplosion = Instantiate(botExplosion, this.transform.position, botExplosion.transform.rotation);
+            Destroy(newExplosion, 2);
         }
     }
 }

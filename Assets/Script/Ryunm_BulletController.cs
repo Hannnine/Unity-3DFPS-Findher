@@ -11,6 +11,8 @@ public class Ryunm_BulletController : MonoBehaviour {
     [SerializeField] float P2EdamaValue = 10;
     [SerializeField] float E2PdamaValue = 1;
 
+    [SerializeField] GameObject bulletExplosion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,14 @@ public class Ryunm_BulletController : MonoBehaviour {
                     collision.gameObject.GetComponent<Ryunm_EnemyController>().enemyAni.TriggerOnDamage(); //Trigger onAttack
                 }
                 break;
+        }
+        BornBulletExplosion();
+        
+    }
+    private void BornBulletExplosion() {
+        if (bulletExplosion) {
+            GameObject newExplosion = Instantiate(bulletExplosion, this.transform.position, bulletExplosion.transform.rotation);
+            Destroy(newExplosion,2);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ryunm_WeaponController : MonoBehaviour {
     // Fire
@@ -27,11 +28,24 @@ public class Ryunm_WeaponController : MonoBehaviour {
     [SerializeField] float centerView = 70;
     [SerializeField] float viewRatio = 0.2f;
 
+    // Ammo
+    [SerializeField] float maxAmmoCount = 18;
+    [SerializeField] float currentAmmoCount = 18;
+    [SerializeField] float reloadTime = 1;
+    [SerializeField] Slider ammoSlider;
+
 
     // Start is called before the first frame update
     void Start() {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         weaponCam = GameObject.FindGameObjectWithTag("WeaponCam").GetComponent<Camera>();
+
+        currentAmmoCount = maxAmmoCount;
+        ammoSlider.value = 1; ammoSlider.enabled = true;
+
+        if (ammoSlider) {
+            ammoSlider.value = currentAmmoCount / maxAmmoCount;
+        }
     }
 
     // Update is called once per frame
@@ -52,7 +66,14 @@ public class Ryunm_WeaponController : MonoBehaviour {
         if (Input.GetMouseButtonUp(0)) {
             isFire = false;
             StopCoroutine("Fire");
+
+            if(Input.GetKeyDown(KeyCode.R)) {
+                // Reload ammo
+                StopCoroutine("ReloadAmmo");
+                StartCoroutine("ReloadAmmo");
+            }
         }
+
     }
     IEnumerator Fire() {
         while (isFire) {
@@ -64,6 +85,11 @@ public class Ryunm_WeaponController : MonoBehaviour {
                 StopCoroutine("WeaponRecoil");
                 StartCoroutine("WeaponRecoil");
                 PlayBulletSource();
+
+                currentAmmoCount--;
+                if (ammoSlider) {
+                    ammoSlider.value = currentAmmoCount / maxAmmoCount;
+                }
 
                 Destroy(newBullet, 5);
             }
@@ -118,6 +144,16 @@ public class Ryunm_WeaponController : MonoBehaviour {
             weaponCam.transform.localPosition = Vector3.Lerp(weaponCam.transform.localPosition, weaponCamDefaultPoint, viewRatio);
             weaponCam.fieldOfView = Mathf.Lerp(weaponCam.fieldOfView, defaultView, viewRatio);
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, defaultView, viewRatio);
+            yield return null;
+        }
+    }
+    IEnumerator ReloadAmmo() {
+        while (!isFire && currentAmmoCount<maxAmmoCount ) {
+            var loadValue = maxAmmoCount / reloadTime * Time.deltaTime;
+            currentAmmoCount += loadValue;
+            if (ammoSlider) {
+                ammoSlider.value = currentAmmoCount / maxAmmoCount;
+            }
             yield return null;
         }
     }
