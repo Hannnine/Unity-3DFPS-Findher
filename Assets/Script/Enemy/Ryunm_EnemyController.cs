@@ -24,11 +24,16 @@ public class Ryunm_EnemyController : MonoBehaviour {
     [SerializeField] float minAngle = 15;
     [SerializeField] float fireInterval = 2;
     [SerializeField] float bulletStartSpeed = 10;
-    [SerializeField] bool isFire;
-    [SerializeField] bool isAlert;
+    public bool isFire;
+    public bool isAlert;
 
     // Animator
     public Ryunm_HoverBotAnimatorController enemyAni;   //This is a script
+
+    // Audio
+    [SerializeField] AudioSource bulletSource = null;
+    [SerializeField] AudioSource alertSource = null;
+    [SerializeField] AudioSource moveSource = null;
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +73,7 @@ public class Ryunm_EnemyController : MonoBehaviour {
     }
 
     private void EnemyPatrol() {
-        if (!enemyAgent.pathPending && enemyAgent.remainingDistance < 0.5f) {
+        if (!enemyAgent.pathPending && enemyAgent.remainingDistance < 2f) {
             // Only set next destination if not currently on a path and reached destination
             SetNextDestination();
         }
@@ -82,18 +87,28 @@ public class Ryunm_EnemyController : MonoBehaviour {
             // Speed
             enemyAni.moveSpeed = enemyAgent.speed;
             enemyAni.Alerted = isAlert;
+            if (alertSource) {
+                alertSource.Play();
+            }
+            if (moveSource) {
+                moveSource.Play();
+            }
         }
         else {
             // Only patrol if not currently alert
             enemyAni.Alerted = isAlert;
             EnemyPatrol();
+            if (moveSource) {
+                moveSource.Stop();
+            }
         }
     }
 
     private void FireController() {
         // Check whether player is in the range of shoot
         var direction = (_playerController.enemyCheckPoint.position - bulletStartPoint.position).normalized;
-        if (Vector3.Angle(direction, bulletStartPoint.forward) < minAngle) {
+        bool Judge = Vector3.Angle(direction, bulletStartPoint.forward) < minAngle ? true : false;
+        if (Judge) {
             if (isAlert && !isFire) {
                 isFire = true;
                 StartCoroutine("Fire", direction);
@@ -118,12 +133,18 @@ public class Ryunm_EnemyController : MonoBehaviour {
             GameObject newBullet = Instantiate(bullet, bulletStartPoint.position, rotation);
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletStartSpeed;
             newBullet.GetComponent<Ryunm_BulletController>().bulletType = BulletType.Enemy_Bullet;
+            PlayBulletSource();
             Destroy(newBullet, 5);
 
             // Fire animator
             enemyAni.TriggerAttack();
 
             yield return new WaitForSeconds(fireInterval);
+        }
+    }
+    private void PlayBulletSource() {
+        if (bulletSource) {
+            bulletSource.Play();
         }
     }
 }

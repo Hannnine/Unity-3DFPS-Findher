@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ryunm_PlayerController : MonoBehaviour {
     // Mouse Part
@@ -13,7 +14,8 @@ public class Ryunm_PlayerController : MonoBehaviour {
 
     // Keyboard Part
     [SerializeField] CharacterController playerCC;
-    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float moveSpeed = 0.25f;
+    [SerializeField] float originSpeed = 0.25f;
     [SerializeField] float Gravity = -9.8f;
     [SerializeField] float ver_Velocity = 0;
     [SerializeField] float MAX_HEIGHT = 0.1f;
@@ -27,26 +29,49 @@ public class Ryunm_PlayerController : MonoBehaviour {
     public Ryunm_HoverBotAnimatorController animatorController;
     public Transform enemyCheckPoint;
 
+    // Run Model
+    [SerializeField] float runSpeed = 0.7f;
+    [SerializeField] float currentEnergy;
+    [SerializeField] float maxEnergy = 100;
+    [SerializeField] float runRange = 5f;
+    [SerializeField] float recoveryInterval = 3;
+    [SerializeField] float recoveryTime = 2;
+    [SerializeField] bool isRunning;
+    [SerializeField] Slider energySlider;
+
+    // Audio
+    [SerializeField] AudioSource stepSource;
+    [SerializeField] AudioSource jumpSource;
+    [SerializeField] AudioSource landSource;
+
 
     // Start is called before the first frame update
     void Start()
     {
         playerCC = GetComponent<CharacterController>();
         animatorController = GetComponent<Ryunm_HoverBotAnimatorController>();
+
+        currentEnergy = maxEnergy;
+        energySlider.value = 1;
+        if (energySlider) {
+            energySlider.value = currentEnergy / maxEnergy;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         JumpCheck();
+        PlayerRun();
         
     }
 
     private void FixedUpdate() {
+
         PlayerRotateControl();
         PlayerMovement();
         ApplyJump();
-        
+        PlayerEnergy();
     }
 
     private void PlayerRotateControl() {
@@ -64,7 +89,6 @@ public class Ryunm_PlayerController : MonoBehaviour {
         Quaternion currentLocalRotation = Quaternion.Euler(new Vector3(RotateOffset_X, EyeView_Transform.localEulerAngles.y, EyeView_Transform.localEulerAngles.z));
         EyeView_Transform.localRotation = currentLocalRotation;
     }
-
     private void PlayerMovement() {
         if (playerCC == null) return;
 
@@ -85,6 +109,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
         // CheckGround
         isGround = playerCC.isGrounded;
 
+
         playerCC.Move(motionValue);
 
         // Evalute the Animator
@@ -93,7 +118,6 @@ public class Ryunm_PlayerController : MonoBehaviour {
             animatorController.Alerted = Input_ver == 0 ? false : true;
         }
     }
-
     private void JumpCheck() {
         //Check Jump
         if (Input.GetButtonDown("Jump")) {
@@ -101,15 +125,71 @@ public class Ryunm_PlayerController : MonoBehaviour {
         }
     }
     private void ApplyJump() {
+        float time = 2 * Mathf.Sqrt(2 * MAX_HEIGHT / -Gravity);
         // Make sure Jump smoothly
         if (shouldJump && isGround) {
             ver_Velocity = Mathf.Sqrt(2 * -Gravity * MAX_HEIGHT);
             shouldJump = false; // reset
+            if (jumpSource && landSource) {
+                jumpSource.Play();
+                Invoke("PlayLandSound", time);
+            }
         }
     }
+    private void PlayerRun() {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && energySlider.value > 0) {
+            isRunning = true;
+            moveSpeed = runSpeed;
+            StartCoroutine("UseEnergy");
 
-    public void OnDamage() {
-        animatorController.TriggerOnDamage();
+
+            if (stepSource) {
+                stepSource.Play();
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            isRunning = false;
+            moveSpeed = originSpeed;
+            StopCoroutine("UseEnergy");
+
+            if (stepSource) {
+                stepSource.Stop();
+            }
+        }
     }
-
+    private void PlayerEnergy() {
+        if (!isRunning && currentEnergy < maxEnergy) {
+            StartCoroutine("RecoveryEnergy");
+        }
+        else {
+            StopCoroutine("RecoveryEnergy");
+        }
+    }
+    IEnumerator UseEnergy() {
+        while(isRunning) {
+            currentEnergy -= maxEnergy / runRange * Time.deltaTime;
+            if (energySlider) {
+                energySlider.value = currentEnergy / maxEnergy;
+            }
+            yield return null;
+        }
+    }
+    IEnumerator RecoveryEnergy() {
+        yield return new WaitForSeconds(recoveryInterval);
+        while (!isRunning && currentEnergy < maxEnergy) {
+            currentEnergy += maxEnergy / recoveryTime * Time.deltaTime;
+            if (energySlider) {
+                energySlider.value = currentEnergy / maxEnergy;
+            }
+            yield return null;
+        }
+    }
+    private void PlayStepSource() {
+        if (stepSource) {
+            stepSource.Play();
+        }
+    }
+    private void PlayLandSound() {
+        landSource.Play();
+    }
 }

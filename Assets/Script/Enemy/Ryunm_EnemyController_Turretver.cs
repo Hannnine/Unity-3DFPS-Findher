@@ -16,14 +16,17 @@ public class Ryunm_EnemyController_Turretver : MonoBehaviour {
     // Enemy Fire
     [SerializeField] GameObject bullet;
     [SerializeField] Transform bulletStartPoint;
-    [SerializeField] float minAngle = 15;
     [SerializeField] float fireInterval = 2;
     [SerializeField] float bulletStartSpeed = 10;
-    [SerializeField] bool isFire;
-    [SerializeField] bool isActive;
+    public bool isFire;
+    public bool isActive;
 
     // Animator
     public Ryunm_TurretAnimatorController enemyAni;   //This is a script
+
+    // Audio
+    [SerializeField] AudioSource bulletSource = null;
+    [SerializeField] AudioSource alertSource = null;
 
     // Start is called before the first frame update
     void Start() {
@@ -45,6 +48,9 @@ public class Ryunm_EnemyController_Turretver : MonoBehaviour {
     private void EnemyActive() {
         isActive = Vector3.Distance(transform.position, _playerController.enemyCheckPoint.position) < minDistance ? true : false;
         if (isActive) {
+            if (alertSource) {
+                alertSource.Play();
+            }
             enemyAni.isActive = isActive;
             // Get the position of Player
             Vector3 playerDirection = _playerController.enemyCheckPoint.position - transform.position;
@@ -62,7 +68,8 @@ public class Ryunm_EnemyController_Turretver : MonoBehaviour {
     private void FireController() {
         // Check whether player is in the range of shoot
         var direction = (_playerController.enemyCheckPoint.position - bulletStartPoint.position).normalized;
-        if (Vector3.Angle(direction, bulletStartPoint.forward) < minAngle) {
+        bool Judge = Vector3.Distance(transform.position, _playerController.enemyCheckPoint.position) < minDistance ? true : false;
+        if (Judge) {
             if (isActive && !isFire) {
                 isFire = true;
                 StartCoroutine("Fire", direction);
@@ -77,8 +84,8 @@ public class Ryunm_EnemyController_Turretver : MonoBehaviour {
     }
 
     IEnumerator Fire(Vector3 targetDirection) {
-        yield return new WaitForSeconds(fireInterval);
         while (isFire) {
+            yield return new WaitForSeconds(fireInterval);
             // Update direction to player
             targetDirection = (_playerController.enemyCheckPoint.position - bulletStartPoint.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(targetDirection);
@@ -87,9 +94,15 @@ public class Ryunm_EnemyController_Turretver : MonoBehaviour {
             GameObject newBullet = Instantiate(bullet, bulletStartPoint.position, rotation);
             newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletStartSpeed;
             newBullet.GetComponent<Ryunm_BulletController>().bulletType = BulletType.Enemy_Bullet;
+            PlayBulletSource();
             Destroy(newBullet, 5);
 
             yield return new WaitForSeconds(fireInterval);
+        }
+    }
+    private void PlayBulletSource() {
+        if (bulletSource) {
+            bulletSource.Play();
         }
     }
 }

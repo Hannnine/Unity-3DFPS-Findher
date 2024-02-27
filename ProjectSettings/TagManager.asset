@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - WeaponCam
   - NotCopy
+  - Enemy_HovreBot
+  - Enemy_Turret
   layers:
   - Default
   - TransparentFX

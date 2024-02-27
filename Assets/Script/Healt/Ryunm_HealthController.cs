@@ -11,6 +11,8 @@ public class Ryunm_HealthController : MonoBehaviour {
 
     [SerializeField] GameObject botExplosion;
 
+    [SerializeField] AudioSource deathSource = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,10 @@ public class Ryunm_HealthController : MonoBehaviour {
         if(health <= 0) { 
             health = 0;
             BornBotExplosion();
+            if (deathSource) {
+                deathSource.Play();
+            }
+
             Destroy(this.gameObject);
             //Death
         }

@@ -34,6 +34,13 @@ public class Ryunm_WeaponController : MonoBehaviour {
     [SerializeField] float reloadTime = 1;
     [SerializeField] Slider ammoSlider;
 
+    // Closed Attack
+    [SerializeField] Transform closeAtackPoint;
+    [SerializeField] float closeAtackRation = 0.5f;
+
+    // Audio
+    [SerializeField] AudioSource reloadSorce;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -41,7 +48,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
         weaponCam = GameObject.FindGameObjectWithTag("WeaponCam").GetComponent<Camera>();
 
         currentAmmoCount = maxAmmoCount;
-        ammoSlider.value = 1; ammoSlider.enabled = true;
+        ammoSlider.value = 1;
 
         if (ammoSlider) {
             ammoSlider.value = currentAmmoCount / maxAmmoCount;
@@ -72,6 +79,14 @@ public class Ryunm_WeaponController : MonoBehaviour {
             // Reload ammo
             StopCoroutine("ReloadAmmo");
             StartCoroutine("ReloadAmmo");
+            if (reloadSorce) {
+                reloadSorce.Play();
+            }
+        }
+        
+        if(Input.GetKeyUp(KeyCode.F)) {
+            StopCoroutine("WeaponCloseAttack");
+            StartCoroutine("WeaponCloseAttack");
         }
     }
     IEnumerator Fire() {
@@ -112,13 +127,28 @@ public class Ryunm_WeaponController : MonoBehaviour {
             }
         }
     }
+    IEnumerator WeaponCloseAttack() {
+        yield return null;
+
+        if (defautPoint != null && closeAtackPoint != null) {
+            // Attack
+            while (transform.localPosition != closeAtackPoint.localPosition) {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, closeAtackPoint.localPosition, closeAtackRation);
+                yield return null;
+            }
+            // Back
+            while (transform.localPosition != defautPoint.localPosition) {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, defautPoint.localPosition, closeAtackRation);
+                yield return null;
+            }
+        }
+    }
 
     private void PlayBulletSource() {
         if (bulletSource) {
             bulletSource.Play();
         }
     }
-
     private void ViewChange() {
         if (Input.GetMouseButton(1)) {
             StopCoroutine("ViewToDefault");
@@ -129,7 +159,6 @@ public class Ryunm_WeaponController : MonoBehaviour {
             StartCoroutine("ViewToDefault");
         }
     }
-
     IEnumerator ViewToCenter() {
         while (weaponCam.transform.localPosition != weaponCamCenterPoint) {
             weaponCam.transform.localPosition = Vector3.Lerp(weaponCam.transform.localPosition, weaponCamCenterPoint, viewRatio);
