@@ -29,12 +29,10 @@ public class Ryunm_HoverBotAnimatorController : MonoBehaviour {
     public void TriggerAttack() {
         if(_hovertAni == null) return;
         _hovertAni.SetTrigger("Attack");
-        print("hehe");
     }
 
     public void TriggerOnDamage() {
         if(_hovertAni == null) return;
         _hovertAni.SetTrigger("OnDamaged");
-        print("hehe");
     }
 }
