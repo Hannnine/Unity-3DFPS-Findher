@@ -66,17 +66,16 @@ public class Ryunm_WeaponController : MonoBehaviour {
         if (Input.GetMouseButtonUp(0)) {
             isFire = false;
             StopCoroutine("Fire");
-
-            if(Input.GetKeyDown(KeyCode.R)) {
-                // Reload ammo
-                StopCoroutine("ReloadAmmo");
-                StartCoroutine("ReloadAmmo");
-            }
         }
 
+        if (Input.GetKeyDown(KeyCode.R)) {
+            // Reload ammo
+            StopCoroutine("ReloadAmmo");
+            StartCoroutine("ReloadAmmo");
+        }
     }
     IEnumerator Fire() {
-        while (isFire) {
+        while (isFire && currentAmmoCount>0) {
             if (bullStartPoint != null || bullet != null) {
                 GameObject newBullet = Instantiate(bullet, bullStartPoint.position, bullStartPoint.rotation);
                 newBullet.GetComponent<Rigidbody>().velocity = newBullet.transform.forward * bulletStartSpeed;
