@@ -21,13 +21,6 @@ public class Ryunm_HealthController : MonoBehaviour {
             healthSlider.value = health / MAX_HEALTH;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Damage(float damage) {
         
         if(health > 0) {
@@ -35,7 +28,6 @@ public class Ryunm_HealthController : MonoBehaviour {
             if (healthSlider) {
                 healthSlider.value = health / MAX_HEALTH;
             }
-
         }
         if(health <= 0) { 
             health = 0;
@@ -48,6 +40,22 @@ public class Ryunm_HealthController : MonoBehaviour {
             //Death
         }
     }
+
+    public void Health(float cure) {
+        if (health > 0) {
+            if (health + cure > MAX_HEALTH) {
+                health = MAX_HEALTH;
+            }
+            else {
+                health += cure;
+            }
+
+            if (healthSlider) {
+                healthSlider.value = health / MAX_HEALTH;
+            }
+        }
+    }
+
 
     private void BornBotExplosion() {
         if (botExplosion) {

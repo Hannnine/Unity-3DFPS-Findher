@@ -13,6 +13,7 @@ public class Ryunm_BulletController : MonoBehaviour {
 
     [SerializeField] GameObject bulletExplosion;
 
+    public bool shouldExplosion = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +53,7 @@ public class Ryunm_BulletController : MonoBehaviour {
         
     }
     private void BornBulletExplosion() {
-        if (bulletExplosion) {
+        if (bulletExplosion && shouldExplosion) {
             GameObject newExplosion = Instantiate(bulletExplosion, this.transform.position, bulletExplosion.transform.rotation);
             Destroy(newExplosion,2);
         }

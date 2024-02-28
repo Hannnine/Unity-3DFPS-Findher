@@ -9,7 +9,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
     public GameObject bullet;
     [SerializeField] float bulletStartSpeed = 100f;
     bool isFire = false;
-    [SerializeField] float fireInterval = 0.1f;
+    public float fireInterval = 0.1f;
 
     // Back
     [SerializeField] Transform defautPoint;
@@ -29,8 +29,8 @@ public class Ryunm_WeaponController : MonoBehaviour {
     [SerializeField] float viewRatio = 0.2f;
 
     // Ammo
-    [SerializeField] float maxAmmoCount = 18;
-    [SerializeField] float currentAmmoCount = 18;
+    public float maxAmmoCount = 18;
+    public float currentAmmoCount = 18;
     [SerializeField] float reloadTime = 1;
     [SerializeField] Slider ammoSlider;
 

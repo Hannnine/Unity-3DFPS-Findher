@@ -39,6 +39,9 @@ public class Ryunm_PlayerController : MonoBehaviour {
     [SerializeField] bool isRunning;
     [SerializeField] Slider energySlider;
 
+    // Skills
+    [SerializeField] Ryunm_PlayerSkills skillsController;
+
     // Audio
     [SerializeField] AudioSource stepSource;
     [SerializeField] AudioSource jumpSource;
@@ -63,7 +66,8 @@ public class Ryunm_PlayerController : MonoBehaviour {
     {
         JumpCheck();
         PlayerRun();
-        
+        skillsController.SkillActive();
+
     }
 
     private void FixedUpdate() {
@@ -108,6 +112,8 @@ public class Ryunm_PlayerController : MonoBehaviour {
 
         // CheckGround
         isGround = playerCC.isGrounded;
+
+        
 
 
         playerCC.Move(motionValue);
