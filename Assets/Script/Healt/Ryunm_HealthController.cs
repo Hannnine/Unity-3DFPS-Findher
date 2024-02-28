@@ -4,14 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Ryunm_HealthController : MonoBehaviour {
+    [SerializeField] GameObject HealthHolder;
     [SerializeField] float MAX_HEALTH = 100;
     [SerializeField] float health = 100;
 
     [SerializeField] Slider healthSlider;
 
     [SerializeField] GameObject botExplosion;
-
     [SerializeField] AudioSource deathSource = null;
+
+    //Pickup
+    [SerializeField] GameObject healthPackPrefab;
+    [SerializeField] float healthPackRadius = 1f; // set range
+    public bool shouldHealthPack = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +26,9 @@ public class Ryunm_HealthController : MonoBehaviour {
         if (healthSlider) {
             healthSlider.value = health / MAX_HEALTH;
         }
+
+        shouldHealthPack = HealthHolder.gameObject.CompareTag("Enemy_Turret") ? true : false;
+        shouldHealthPack = HealthHolder.gameObject.CompareTag("Enemy_HovreBot") ? true : false;
     }
     public void Damage(float damage) {
         
@@ -35,12 +44,10 @@ public class Ryunm_HealthController : MonoBehaviour {
             if (deathSource) {
                 deathSource.Play();
             }
-
             Destroy(this.gameObject);
             //Death
         }
     }
-
     public void Health(float cure) {
         if (health > 0) {
             if (health + cure > MAX_HEALTH) {
@@ -55,12 +62,17 @@ public class Ryunm_HealthController : MonoBehaviour {
             }
         }
     }
-
-
     private void BornBotExplosion() {
         if (botExplosion) {
             GameObject newExplosion = Instantiate(botExplosion, this.transform.position, botExplosion.transform.rotation);
             Destroy(newExplosion, 2);
+        }
+    }
+    public void HealthPack(bool shouldHealthPack) {
+        // Instantiate a health pack
+        if (shouldHealthPack && healthPackPrefab) {
+            Vector3 healthPackPosition = transform.position + Vector3.up * 0.5f;
+            Instantiate(healthPackPrefab, healthPackPosition, Quaternion.identity);
         }
     }
 }

@@ -38,18 +38,18 @@ public class Ryunm_CloseAttackController : MonoBehaviour {
                 if (collision.gameObject.CompareTag("Enemy_HovreBot")) {
                     collision.gameObject.GetComponent<Ryunm_HealthController>().Damage(P2EdamaValue);
                     collision.gameObject.GetComponent<Ryunm_EnemyController>().enemyAni.TriggerOnDamage(); //Trigger onAttack
+                    PlayStepSource();
                 }
                 if (collision.gameObject.CompareTag("Enemy_Turret")) {
                     collision.gameObject.GetComponent<Ryunm_HealthController>().Damage(P2EdamaValue);
                     collision.gameObject.GetComponent<Ryunm_EnemyController_Turretver>().enemyAni.TriggerOnDamage(); //Trigger onAttack
+                    PlayStepSource();
                 }
 
                 break;
         }
 
         BornAttackExplosion();
-        PlayStepSource();
-
     }
     private void BornAttackExplosion() {
         if (attackExplosion) {

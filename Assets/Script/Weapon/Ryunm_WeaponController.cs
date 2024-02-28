@@ -2,8 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Ryunm_WeaponController : MonoBehaviour {
+    // PlayerControls
+    PlayerControlls playerControlls;
+    InputAction fire;
+    InputAction aim;
+    InputAction reload;
+    InputAction closeAttack;
+    private void Awake() {
+        playerControlls = new PlayerControlls();
+    }
+    private void OnEnable() {
+        fire = playerControlls.FPS_Player_Controller.Fire;
+        fire.Enable();
+        aim = playerControlls.FPS_Player_Controller.Aim;
+        aim.Enable();
+        reload = playerControlls.FPS_Player_Controller.Reload;
+        reload.Enable();
+        closeAttack = playerControlls.FPS_Player_Controller.CloseAttack;
+        closeAttack.Enable();
+    }
+    private void OnDisable() {
+        fire.Disable();
+        aim.Disable();
+        reload.Disable();
+        closeAttack.Disable();
+    }
+
     // Fire
     public Transform bullStartPoint;
     public GameObject bullet;
@@ -27,6 +54,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
     [SerializeField] float defaultView = 60;
     [SerializeField] float centerView = 70;
     [SerializeField] float viewRatio = 0.2f;
+    [SerializeField] bool isAim = false;
 
     // Ammo
     public float maxAmmoCount = 18;
@@ -40,13 +68,11 @@ public class Ryunm_WeaponController : MonoBehaviour {
 
     // Audio
     [SerializeField] AudioSource reloadSorce;
+   
 
 
     // Start is called before the first frame update
     void Start() {
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        weaponCam = GameObject.FindGameObjectWithTag("WeaponCam").GetComponent<Camera>();
-
         currentAmmoCount = maxAmmoCount;
         ammoSlider.value = 1;
 
@@ -57,38 +83,57 @@ public class Ryunm_WeaponController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        OpenFire();
-        ViewChange();
+        OnFire();
+        WeaponClosedAttack();
+        Aim();
+        WeaponReload();
 
         // RayCast
         Ray _ray = new(bullStartPoint.position, bullStartPoint.forward);
         Debug.DrawRay(_ray.origin, _ray.direction * 1000, Color.red);
     }
-    private void OpenFire() {
-        if (Input.GetMouseButtonDown(0)) {
-            isFire = true;
-            StartCoroutine("Fire");
+    private void OnFire() {
+        if (fire.triggered) {
+            if (!isFire) {
+                isFire = true;
+                StartCoroutine(Fire());
+            }
+            else {
+                isFire = false;
+                StopCoroutine(Fire());
+            }
+        }   
+    }
+    private void Aim() {
+        if (aim.triggered) {
+            if(!isAim) {
+                isAim = true;
+                StopCoroutine("ViewToDefault");
+                StartCoroutine("ViewToCenter");
+            }
+            else if (isAim) {
+                isAim = false;
+                StopCoroutine("ViewToCenter");
+                StartCoroutine("ViewToDefault");
+            }
         }
-
-        if (Input.GetMouseButtonUp(0)) {
-            isFire = false;
-            StopCoroutine("Fire");
+    }
+    private void WeaponClosedAttack() {
+        if (closeAttack.triggered) {
+            StopCoroutine(WeaponCloseAttack());
+            StartCoroutine(WeaponCloseAttack());
         }
-
-        if (Input.GetKeyDown(KeyCode.R)) {
-            // Reload ammo
-            StopCoroutine("ReloadAmmo");
-            StartCoroutine("ReloadAmmo");
+    }
+    private void WeaponReload() {
+        if (reload.triggered) {
+            StopCoroutine(ReloadAmmo());
+            StartCoroutine(ReloadAmmo());
             if (reloadSorce) {
                 reloadSorce.Play();
             }
         }
-        
-        if(Input.GetKeyUp(KeyCode.F)) {
-            StopCoroutine("WeaponCloseAttack");
-            StartCoroutine("WeaponCloseAttack");
-        }
     }
+
     IEnumerator Fire() {
         while (isFire && currentAmmoCount>0) {
             if (bullStartPoint != null || bullet != null) {
@@ -110,7 +155,6 @@ public class Ryunm_WeaponController : MonoBehaviour {
             yield return new WaitForSeconds(fireInterval);
         }
     }
-
     IEnumerator WeaponRecoil() {
         yield return null;
 
@@ -143,27 +187,16 @@ public class Ryunm_WeaponController : MonoBehaviour {
             }
         }
     }
-
     private void PlayBulletSource() {
         if (bulletSource) {
             bulletSource.Play();
         }
     }
-    private void ViewChange() {
-        if (Input.GetMouseButton(1)) {
-            StopCoroutine("ViewToDefault");
-            StartCoroutine("ViewToCenter");
-        }
-        else {
-            StopCoroutine("ViewToCenter");
-            StartCoroutine("ViewToDefault");
-        }
-    }
     IEnumerator ViewToCenter() {
         while (weaponCam.transform.localPosition != weaponCamCenterPoint) {
             weaponCam.transform.localPosition = Vector3.Lerp(weaponCam.transform.localPosition, weaponCamCenterPoint, viewRatio);
-            weaponCam.fieldOfView = Mathf.Lerp(weaponCam.fieldOfView, centerView, viewRatio);
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, centerView, viewRatio);
+            weaponCam.fieldOfView = Mathf.Lerp(weaponCam.fieldOfView, centerView, viewRatio);
             yield return null;
         }
     }
