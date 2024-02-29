@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Ryunm_CloseAttackController : MonoBehaviour {
     public BulletType bulletType = BulletType.Player_Bullet;
-    [SerializeField] float P2EdamaValue = 5;
+    public float P2EdamaValue = 5;
+    public float P2EdamaValue_origin = 5;
     [SerializeField] float E2PdamaValue = 1;
 
     [SerializeField] GameObject attackExplosion;

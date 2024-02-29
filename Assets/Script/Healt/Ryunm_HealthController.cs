@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Ryunm_HealthController : MonoBehaviour {
     [SerializeField] GameObject HealthHolder;
-    [SerializeField] float MAX_HEALTH = 100;
-    [SerializeField] float health = 100;
+    public float MAX_HEALTH = 100;
+    public float health;
 
     [SerializeField] Slider healthSlider;
 
