@@ -65,6 +65,7 @@ public class Ryunm_WeaponController : MonoBehaviour {
     // Closed Attack
     [SerializeField] Transform closeAtackPoint;
     [SerializeField] float closeAtackRation = 0.5f;
+    [SerializeField] bool isCloseAttack;
 
     // Audio
     [SerializeField] AudioSource reloadSorce;
@@ -120,8 +121,16 @@ public class Ryunm_WeaponController : MonoBehaviour {
     }
     private void WeaponClosedAttack() {
         if (closeAttack.triggered) {
-            StopCoroutine(WeaponCloseAttack());
-            StartCoroutine(WeaponCloseAttack());
+            if (!isCloseAttack) {
+                isCloseAttack = true;
+                StopCoroutine("WeaponCloseAttackToDefaut");
+                StartCoroutine("WeaponCloseAttackToAttack");
+            }
+            else if (isCloseAttack) {
+                isCloseAttack = false;
+                StopCoroutine("WeaponCloseAttackToAttack");
+                StartCoroutine("WeaponCloseAttackToDefaut");
+            }
         }
     }
     private void WeaponReload() {
@@ -171,20 +180,18 @@ public class Ryunm_WeaponController : MonoBehaviour {
             }
         }
     }
-    IEnumerator WeaponCloseAttack() {
-        yield return null;
-
-        if (defautPoint != null && closeAtackPoint != null) {
-            // Attack
-            while (transform.localPosition != closeAtackPoint.localPosition) {
-                transform.localPosition = Vector3.Lerp(transform.localPosition, closeAtackPoint.localPosition, closeAtackRation);
-                yield return null;
-            }
-            // Back
-            while (transform.localPosition != defautPoint.localPosition) {
-                transform.localPosition = Vector3.Lerp(transform.localPosition, defautPoint.localPosition, closeAtackRation);
-                yield return null;
-            }
+    IEnumerator WeaponCloseAttackToAttack() {
+        // Attack
+        while (transform.localPosition != closeAtackPoint.localPosition) {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, closeAtackPoint.localPosition, closeAtackRation);
+            yield return null;
+        }
+    }
+    IEnumerator WeaponCloseAttackToDefaut() {
+        // Back
+        while (transform.localPosition != defautPoint.localPosition) {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, defautPoint.localPosition, closeAtackRation);
+            yield return null;
         }
     }
     private void PlayBulletSource() {

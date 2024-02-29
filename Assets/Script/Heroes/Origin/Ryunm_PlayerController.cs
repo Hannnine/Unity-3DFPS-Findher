@@ -46,7 +46,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
 
     // Keyboard Part
     [SerializeField] CharacterController playerCC;
-    [SerializeField] float moveSpeed = 0.25f;
+    public float moveSpeed = 0.25f;
     [SerializeField] float originSpeed = 0.25f;
     [SerializeField] float Gravity = -9.8f;
     [SerializeField] float ver_Velocity = 0;
@@ -58,7 +58,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
 
     // Run Model
     [SerializeField] float runSpeed = 0.7f;
-    [SerializeField] float currentEnergy;
+    public float currentEnergy;
     [SerializeField] float maxEnergy = 100;
     [SerializeField] float runRange = 5f;
     [SerializeField] float recoveryInterval = 3;

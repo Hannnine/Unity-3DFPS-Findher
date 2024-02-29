@@ -74,7 +74,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""CloseAttack"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""dd89fc01-73ca-4fbf-8ec5-29383097a526"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

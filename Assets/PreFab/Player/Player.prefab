@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 8013252322533174334}
   - component: {fileID: 3299430688251153613}
   - component: {fileID: 8013252322533174330}
-  - component: {fileID: 8013252322533174333}
+  - component: {fileID: 5859355817848134092}
   m_Layer: 14
   m_Name: Player
   m_TagString: Player
@@ -337,7 +337,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 695451732494866302}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.3370001, y: 1.5613042, z: 23.273}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -706,7 +706,7 @@ MonoBehaviour:
   squatEyePoint: {x: 0, y: -0.47, z: 0}
   squatRatio: 0.5
   eyeView: {fileID: 4753108401782497006}
-  skillsController: {fileID: 8013252322533174333}
+  skillsController: {fileID: 0}
   stepSource: {fileID: 8013252322533174328}
   jumpSource: {fileID: 8013252322533174335}
   landSource: {fileID: 8013252322533174334}
@@ -722,12 +722,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900ee496abb02e5428f3ec13cba2f81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HealthHolder: {fileID: 695451732494866302}
   MAX_HEALTH: 100
   health: 100
   healthSlider: {fileID: 0}
   botExplosion: {fileID: 0}
   deathSource: {fileID: 0}
---- !u!114 &8013252322533174333
+  healthPackPrefab: {fileID: 6611092897570005065, guid: e7dae87dfb405c744813f1a2b80cb0ad,
+    type: 3}
+  healthPackRadius: 1
+  shouldHealthPack: 0
+--- !u!114 &5859355817848134092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -736,7 +741,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 695451732494866302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9076af4fdc24e3c498c604831b93b0c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d6de8ff66b65f64dbe79d6422d2c90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillOneSlider: {fileID: 0}
@@ -747,8 +752,8 @@ MonoBehaviour:
   skillTwoActiveTime: 2
   skillOneRecoveryTime: 10
   skillTwoRecoveryTime: 5
-  weaponController: {fileID: 7535448986366286315}
-  bulletController: {fileID: 7862434226672339938}
+  weaponController: {fileID: 0}
+  bulletController: {fileID: 0}
 --- !u!1 &818829357901222716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,6 +2158,7 @@ MonoBehaviour:
   ammoSlider: {fileID: 0}
   closeAtackPoint: {fileID: 1973084954421983934}
   closeAtackRation: 0.5
+  isCloseAttack: 0
   reloadSorce: {fileID: 7371193006208917182}
 --- !u!82 &7371193006208917182
 AudioSource:
