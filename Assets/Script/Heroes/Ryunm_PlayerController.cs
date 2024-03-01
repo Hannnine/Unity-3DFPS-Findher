@@ -74,7 +74,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
     [SerializeField] Transform eyeView;
 
     // Skills
-    [SerializeField] bool isOrigin;
+    [SerializeField] bool isBallistic;
     [SerializeField] bool isOctane;
     [SerializeField] bool isLoto;
 
@@ -99,11 +99,11 @@ public class Ryunm_PlayerController : MonoBehaviour {
         if (energySlider) {
             energySlider.value = currentEnergy / maxEnergy;
         }
-
+        string playerHeroChoice = PlayerPrefs.GetString("PlayerChoice");
         //Define Health
-        if(isOrigin) { healthController.MAX_HEALTH = 150; healthController.health = 150; }
-        else if (isOctane) { healthController.MAX_HEALTH = 100; healthController.health = 100; }
-        else if (isLoto) { healthController.MAX_HEALTH = 200; healthController.health = 200; }
+        if (playerHeroChoice == "Ballistic") { healthController.MAX_HEALTH = 150; healthController.health = 150; isBallistic = true; isOctane = isLoto = false;}
+        else if (playerHeroChoice == "Octane") { healthController.MAX_HEALTH = 100; healthController.health = 100; isOctane = true; isBallistic = isLoto = false; }
+        else if (playerHeroChoice == "Loto") { healthController.MAX_HEALTH = 200; healthController.health = 200; isLoto = true; isBallistic = isOctane = false; }
     }
 
     // Update is called once per frame
@@ -228,7 +228,7 @@ public class Ryunm_PlayerController : MonoBehaviour {
     }
     
     private void HeroSkillSelect() {
-        if (isOrigin) {
+        if (isBallistic) {
             skillsController.SkillActive();
         }
         else if (isOctane) {
