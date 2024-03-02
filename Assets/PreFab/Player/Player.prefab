@@ -708,7 +708,7 @@ MonoBehaviour:
   squatEyePoint: {x: 0, y: -0.47, z: 0}
   squatRatio: 0.5
   eyeView: {fileID: 4753108401782497006}
-  isOrigin: 0
+  isBallistic: 0
   isOctane: 0
   isLoto: 1
   skillsController: {fileID: 6829256582746692613}

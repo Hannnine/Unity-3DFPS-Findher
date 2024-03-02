@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Ryunm_HealthController : MonoBehaviour {
@@ -44,8 +45,10 @@ public class Ryunm_HealthController : MonoBehaviour {
             if (deathSource) {
                 deathSource.Play();
             }
+            if (this.gameObject.CompareTag("Player")) {
+                SceneManager.LoadScene(13);
+            }
             Destroy(this.gameObject);
-            //Death
         }
     }
     public void Health(float cure) {

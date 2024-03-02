@@ -6,6 +6,6 @@ using UnityEngine.SceneManagement;
 public class Ryunm_Button_GameSettings : MonoBehaviour
 {
     public void GameSettings() {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 }

@@ -56,7 +56,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Squat"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""12398578-9fa7-4e45-a44d-73cdd8981854"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -65,7 +65,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Run"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""c2c1c387-3584-46ac-9340-7077a817c3ee"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
