@@ -47194,7 +47194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Press \n\"E\" to use skill1\n\"Q\" to use skill1\nYour final aim is to
+  m_text: "Press \n\"E\" to use skill1\n\"Q\" to use skill2\nYour final aim is to
     get the Potal"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
