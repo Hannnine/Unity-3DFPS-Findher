@@ -6,66 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BasicUiScence/Start.unity
-    guid: 33e97808fb7ad6245ac44ec4102450c6
+    path: Assets/FPS/Scenes/IntroMenu.unity
+    guid: 56e3faabc5bb30f49a68bb8f1292f988
   - enabled: 1
-    path: Assets/Scenes/BasicUiScence/HeroSelect.unity
-    guid: db98b43c3deae3f45be916b96a03d2ae
+    path: Assets/FPS/Scenes/WinScene.unity
+    guid: 037d06fbede2b4041a843d9ee6fe750c
   - enabled: 1
-    path: Assets/Scenes/DifficultLevel/DifficultChoice.unity
-    guid: f0e7785696d2141448464fd5e5e04539
+    path: Assets/FPS/Scenes/LoseScene.unity
+    guid: 72e5c65a45893714484002914e3fd521
   - enabled: 1
-    path: Assets/Scenes/Story/Story.unity
-    guid: c98f3749c04009c4f97802e2527a238f
-  - enabled: 1
-    path: Assets/Scenes/EasyFloor/Easy_Floor01.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/EasyFloor/Easy_Floor02.unity
-    guid: 1872565886fd7b24ab3508bce1355a98
-  - enabled: 1
-    path: Assets/Scenes/EasyFloor/Easy_Floor03.unity
-    guid: 6fcf2768b25347d48b666392d5941b35
-  - enabled: 1
-    path: Assets/Scenes/NormalFloor/Noraml_Floor01.unity
-    guid: 8f0880d65ee575544bd0c2d5c473e66a
-  - enabled: 1
-    path: Assets/Scenes/NormalFloor/Normal_Floor02.unity
-    guid: bb2a581164133664b9fc630857717eea
-  - enabled: 1
-    path: Assets/Scenes/NormalFloor/Normal_Floor03.unity
-    guid: 97c34430873a6a3418c9f87b5542966a
-  - enabled: 1
-    path: Assets/Scenes/HardFloor/Hard_Floor01.unity
-    guid: 4e04531b4e5b87746bdc276414e57d72
-  - enabled: 1
-    path: Assets/Scenes/HardFloor/Hard_Floor02.unity
-    guid: 1e4b5b007d668ac418fecf6c437ce2e2
-  - enabled: 1
-    path: Assets/Scenes/HardFloor/Hard_Floor03.unity
-    guid: f68597897ea344c478c65c190b0bd2d6
-  - enabled: 1
-    path: Assets/Scenes/BasicUiScence/LoseScence.unity
-    guid: b1f32937843903b4aaec259a28a08377
-  - enabled: 1
-    path: Assets/Scenes/BasicUiScence/WinScence01.unity
-    guid: 3c6397816729c214485d72e991de0dde
-  - enabled: 1
-    path: Assets/Scenes/BasicUiScence/WinScence02.unity
-    guid: 127901b22be8e57468cddee917cec885
-  - enabled: 1
-    path: Assets/Scenes/Story/Heroes.unity
-    guid: 9393225e69d39ff4cb1e73cf32d3170f
-  - enabled: 1
-    path: Assets/Scenes/Story/SelfIntro.unity
-    guid: 3a8f5e67b2884d442a8216951a7a85bf
-  - enabled: 1
-    path: Assets/Scenes/Story/Market.unity
-    guid: 8e9fd40f04c8c4c41916d660c010dcfb
-  - enabled: 1
-    path: Assets/Scenes/Story/Plain.unity
-    guid: 64ccc0377586a4945ac1d3a554cab85f
-  - enabled: 1
-    path: Assets/Scenes/Story/End.unity
-    guid: 98da6b98df897d94993157ba05e4a1fd
+    path: Assets/FPS/Scenes/MainScene.unity
+    guid: d794a2ef8ba31d847ad3c19d03e2ddb9
   m_configObjects: {}

@@ -1,0 +1,18 @@
+root = true
+
+[*.cs]
+indent_style = tab
+indent_size = 2
+csharp_new_line_before_open_brace = none
+
+
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_preserve_single_line_statements = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_around_binary_operators = true
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_after_colon_in_inheritance_clause = true

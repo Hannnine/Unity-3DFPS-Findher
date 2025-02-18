@@ -1,0 +1,19 @@
+{
+    "name": "NodeCanvas",
+    "rootNamespace": "",
+    "references": [
+        "GUID:66c2eb417c67ad849907d0769db96dbf",
+        "GUID:eec0964c48f6f4e40bc3ec2257ccf8c5",
+        "GUID:2e77701fe0ceda44fb763f03ee704c37",
+        "GUID:4dbade8805e46d049aafd892d1e533f1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
